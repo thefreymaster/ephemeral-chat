@@ -39,8 +39,17 @@ export const Send = ({
         variant="filled"
         placeholder="Start typing your message here..."
         onKeyDown={handleKeyDown}
+        autoFocus
         _hover={{
           backgroundColor: "gray.700",
+        }}
+        outline="none"
+        _focus={{
+          outline: "none",
+          borderColor: "inherit",
+          "-webkit-box-shadow": "none",
+          "box-shadow": "none",
+          borderRadius: "5px 0px 0px 5px",
         }}
         isDisabled={!sessionId}
       />

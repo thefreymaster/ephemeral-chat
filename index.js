@@ -31,18 +31,14 @@ app.post("/v1/session/create", async (req, res) => {
 });
 
 io.on("connection", (socket) => {
-  // Send the current active cells to the newly connected client
-  console.log(socket);
-  //   socket.emit("initialize", { socket }); // Convert Set to Array for serialization
-
   socket.on("joinSession", (sessionId) => {
     console.log(`User ${socket.id} joined session ${sessionId}`);
     socket.join(sessionId); // Add the user to the room
-    console.log(socket);
   });
 
   socket.on("send", ({ message, sessionId }) => {
-    socket.emit("send-broadcast", {
+    console.log("message received");
+    io.in(sessionId).emit("sendBroadcast", {
       message,
       messageAuthor: socket.id,
     });
@@ -60,5 +56,5 @@ app.get("*", (req, res) => {
 // Start the server
 const PORT = process.env.PORT || 6001;
 server.listen(PORT, () => {
-  console.log(`Chat API is running on http://localhost:${PORT}/api`);
+  console.log(`Ephemeral Chat API is running on http://localhost:${PORT}/api`);
 });

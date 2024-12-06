@@ -1,4 +1,5 @@
-import { Button } from "@chakra-ui/react";
+import { IconButton } from "@chakra-ui/react";
+import { BiPlus } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 
 export const Create = ({
@@ -15,8 +16,11 @@ export const Create = ({
     navigate(`/${sessionId}`);
   };
   return (
-    <Button colorScheme="gray" width="370px" onClick={handleCreateSession}>
-      New
-    </Button>
+    <IconButton
+      icon={<BiPlus />}
+      colorScheme="gray"
+      onClick={handleCreateSession}
+      aria-label={""}
+    />
   );
 };

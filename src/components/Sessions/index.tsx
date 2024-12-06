@@ -9,30 +9,34 @@ export const Sessions = ({ socket }: any) => {
   const theme = useTheme();
 
   return (
-    <Box display="flex" flexDirection="column">
+    <Box display="flex" flexDirection="column" gap="2">
       {sessions.map((session: string) => (
-        <Box
+        <Badge
           key={session}
           _hover={{ cursor: "pointer" }}
           backgroundColor={
-            session === routeSessionId && theme.colors.gray["500"]
+            session === routeSessionId
+              ? theme.colors.gray["100"]
+              : theme.colors.gray["500"]
           }
           display="flex"
           alignItems="center"
           justifyContent="center"
-          color={
-            session === routeSessionId
-              ? theme.colors.gray["100"]
-              : theme.colors.gray["200"]
-          }
+          // color={
+          //   session === routeSessionId
+          //     ? theme.colors.gray["100"]
+          //     : theme.colors.gray["200"]
+          // }
+          colorScheme="gray"
           padding="10px"
+          size="xs"
           onClick={() => {
             socket.emit("joinSession", routeSessionId);
             navigate(`/${session}`);
           }}
         >
-          <Badge colorScheme="gray">{session}</Badge>
-        </Box>
+          {session}
+        </Badge>
       ))}
     </Box>
   );

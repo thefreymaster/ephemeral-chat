@@ -15,6 +15,7 @@ function App() {
   const { sessions, setSessions } = useGlobalProvider();
 
   const [message, setMessage] = useState("");
+  const [user, setUser] = useState("");
   const [messages, setMessages] = useState<
     Array<{ message: string; messageAuthor: string }>
   >([]);
@@ -22,62 +23,72 @@ function App() {
 
   useEffect(() => {
     // Register the listener only once
-    const handleBroadcast = ({
-      message,
-      messageAuthor,
-    }: {
-      message: string;
-      messageAuthor: string;
-    }) => {
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        { message, messageAuthor },
-      ]);
-    };
-    socket.on(`send-broadcast`, handleBroadcast);
+    socket.on(
+      `sendBroadcast`,
+      ({
+        message,
+        messageAuthor,
+      }: {
+        message: string;
+        messageAuthor: string;
+      }) => {
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          { message, messageAuthor },
+        ]);
+      }
+    );
   }, [sessionId]); // sessionId is constant here, but include it for clarity
 
   useEffect(() => {
     if (sessionId) {
       socket.emit("joinSession", sessionId);
       setSessions([sessionId]);
+      socket.on("connect", () => {
+        console.log("Connected to server with ID:", socket.id);
+        setUser(socket.id ?? "");
+      });
     }
   }, []);
 
   useEffect(() => {
     if (sessionId) {
       setMessages([]);
+      socket.emit("joinSession", sessionId);
     }
   }, [sessionId]);
 
   return (
     <Box width="100vw" height="100vh" display="flex">
       <Box
-        minW="60px"
-        maxW="60px"
+        minW="80px"
+        maxW="80px"
         backgroundColor={theme.colors.gray["800"]}
         height="100%"
+        display="flex"
+        flexDir="column"
+        padding="2"
       >
         <Sessions socket={socket} />
+        <Box flex={1} display="flex" />
+        <Create setSessions={setSessions} sessions={sessions} />
       </Box>
       <Box
-        minW={"calc(100vw - 50px)"}
+        minW={"calc(100vw - 80px)"}
         backgroundColor={theme.colors.gray["900"]}
         height="100%"
       >
-        <Messages messages={messages} />
-      </Box>
-      <Box
-        padding="2"
-        width="100vw"
-        display="flex"
-        position="fixed"
-        bottom="0"
-        backgroundColor={theme.colors.gray["900"]}
-      >
-        <Create setSessions={setSessions} sessions={sessions} />
-        <Box margin="1" />
-        <Send socket={socket} message={message} setMessage={setMessage} />
+        <Messages user={user} messages={messages} />
+        <Box
+          padding="2"
+          width="calc(100vw - 80px)"
+          display="flex"
+          position="fixed"
+          bottom="0"
+          backgroundColor={theme.colors.gray["900"]}
+        >
+          <Send socket={socket} message={message} setMessage={setMessage} />
+        </Box>
       </Box>
     </Box>
   );
