@@ -34,7 +34,7 @@ io.on("connection", (socket) => {
   socket.on("joinSession", (sessionId) => {
     console.log(`User ${socket.id} joined session ${sessionId}`);
     socket.join(sessionId); // Add the user to the room
-    io.in(sessionId).emit("sessionJoinReceived", {
+    io.in(socket.id).emit("sessionJoinReceived", {
       id: socket.id,
     });
   });

@@ -3,7 +3,7 @@ import { io } from "socket.io-client";
 import { Send } from "./components/Send";
 import { useParams } from "react-router-dom";
 import { Create } from "./components/Create";
-import { Box, useTheme, useToast } from "@chakra-ui/react";
+import { Box, useTheme } from "@chakra-ui/react";
 import { Sessions } from "./components/Sessions";
 import { useGlobalProvider } from "./providers/GlobalProvider";
 import { Messages } from "./components/Messages";
@@ -22,7 +22,7 @@ const socket = io(getSocketURL());
 
 function App() {
   const { isMobile } = useDeviceSize();
-  const toast = useToast();
+  // const toast = useToast();
 
   const { sessionId } = useParams();
   const { sessions, setSessions } = useGlobalProvider();
@@ -59,20 +59,22 @@ function App() {
   useEffect(() => {
     if (sessionId) {
       socket.emit("joinSession", sessionId);
-      setSessions([...sessions, sessionId]);
+      if (!sessions.includes(sessionId)) {
+        setSessions([...sessions, sessionId]);
+      }
       document.title = `Ephemeral Chat | ${sessionId}`;
       setMessages([]);
       socket.on("sessionJoinReceived", ({ id }) => {
         console.log("Connected to server with ID:", id);
         setUser(id);
-        toast({
-          description: `${id} has joined.`,
-          status: "info",
-          duration: 9000,
-          isClosable: true,
-          variant: "subtle",
-          position: "top-right",
-        });
+        // toast({
+        //   description: `${id} has joined.`,
+        //   status: "info",
+        //   duration: 9000,
+        //   isClosable: true,
+        //   variant: "subtle",
+        //   position: "top-right",
+        // });
       });
     }
 
@@ -97,7 +99,7 @@ function App() {
         padding="2"
         gap="2"
       >
-        <Sessions socket={socket} />
+        <Sessions />
         <Box flex={1} display="flex" />
         <Join />
         <Create />
@@ -111,6 +113,9 @@ function App() {
         alignItems="flex-end"
         paddingBottom="55px"
       >
+        {/* <Box minW="100%" color="white">
+          {user}
+        </Box> */}
         <Messages user={user} messages={messages} />
         <Box
           padding="2"

@@ -2,7 +2,7 @@ import { Badge, Box, useTheme } from "@chakra-ui/react";
 import { useGlobalProvider } from "../../providers/GlobalProvider";
 import { useNavigate, useParams } from "react-router-dom";
 
-export const Sessions = ({ socket }: any) => {
+export const Sessions = () => {
   const { sessionId: routeSessionId } = useParams();
   const { sessions } = useGlobalProvider();
   const navigate = useNavigate();
@@ -16,8 +16,8 @@ export const Sessions = ({ socket }: any) => {
           _hover={{ cursor: "pointer" }}
           backgroundColor={
             session === routeSessionId
-              ? theme.colors.brand["100"]
-              : theme.colors.brand["500"]
+              ? theme.colors.brand["200"]
+              : theme.colors.brand["800"]
           }
           display="flex"
           alignItems="center"
@@ -31,8 +31,7 @@ export const Sessions = ({ socket }: any) => {
           padding="10px"
           size="xs"
           onClick={() => {
-            socket.emit("joinSession", routeSessionId);
-            navigate(`/${session}`);
+            navigate(`/${session}`)
           }}
         >
           {session}
