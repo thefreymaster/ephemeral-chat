@@ -22,11 +22,11 @@ export const Sessions = ({ socket }: any) => {
           display="flex"
           alignItems="center"
           justifyContent="center"
-          // color={
-          //   session === routeSessionId
-          //     ? theme.colors.gray["100"]
-          //     : theme.colors.gray["200"]
-          // }
+          color={
+            session === routeSessionId
+              ? theme.colors.gray["900"]
+              : theme.colors.gray["300"]
+          }
           colorScheme="gray"
           padding="10px"
           size="xs"
