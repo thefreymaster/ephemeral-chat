@@ -8,7 +8,7 @@ import { Sessions } from "./components/Sessions";
 import { useGlobalProvider } from "./providers/GlobalProvider";
 import { Messages } from "./components/Messages";
 
-const socket = io("http://localhost:6001");
+const socket = io(window.location.origin);
 
 function App() {
   const { sessionId } = useParams();
@@ -38,7 +38,7 @@ function App() {
         ]);
       }
     );
-  }, [sessionId]); // sessionId is constant here, but include it for clarity
+  }, [sessionId]);
 
   useEffect(() => {
     if (sessionId) {
