@@ -61,9 +61,9 @@ function App() {
       setSessions([sessionId]);
       document.title = `Ephemeral Chat | ${sessionId}`;
       setMessages([]);
-      socket.on("connect", () => {
-        console.log("Connected to server with ID:", socket.id);
-        setUser(socket.id ?? "");
+      socket.on("sessionJoinReceived", ({ id }) => {
+        console.log("Connected to server with ID:", id);
+        setUser(id);
       });
     }
 
