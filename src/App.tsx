@@ -7,8 +7,18 @@ import { Box, useTheme } from "@chakra-ui/react";
 import { Sessions } from "./components/Sessions";
 import { useGlobalProvider } from "./providers/GlobalProvider";
 import { Messages } from "./components/Messages";
+import { Join } from "./components/Join";
 
-const socket = io(window.location.origin);
+const NAV_WIDTH = "90px";
+
+const getSocketURL = () => {
+  if (import.meta.env.MODE === "development") {
+    return "localhost:6001";
+  }
+  return window.location.origin;
+};
+
+const socket = io(getSocketURL());
 
 function App() {
   const { sessionId } = useParams();
@@ -53,39 +63,42 @@ function App() {
 
   useEffect(() => {
     if (sessionId) {
+      document.title = `Ephemeral Chat | ${sessionId}`;
       setMessages([]);
       socket.emit("joinSession", sessionId);
     }
   }, [sessionId]);
 
   return (
-    <Box width="100vw" height="100vh" display="flex">
+    <Box
+      width="100vw"
+      height="100vh"
+      display="flex"
+      backgroundColor={theme.colors.brand["900"]}
+    >
       <Box
-        minW="80px"
-        maxW="80px"
-        backgroundColor={theme.colors.gray["800"]}
+        minW={NAV_WIDTH}
+        maxW={NAV_WIDTH}
         height="100%"
         display="flex"
         flexDir="column"
         padding="2"
+        gap="2"
       >
         <Sessions socket={socket} />
         <Box flex={1} display="flex" />
+        <Join sessions={sessions} setSessions={setSessions} />
         <Create setSessions={setSessions} sessions={sessions} />
       </Box>
-      <Box
-        minW={"calc(100vw - 80px)"}
-        backgroundColor={theme.colors.gray["900"]}
-        height="100%"
-      >
+      <Box minW={`calc(100vw - ${NAV_WIDTH})`} height="100%">
         <Messages user={user} messages={messages} />
         <Box
           padding="2"
-          width="calc(100vw - 80px)"
+          width={`calc(100vw - ${NAV_WIDTH})`}
           display="flex"
           position="fixed"
           bottom="0"
-          backgroundColor={theme.colors.gray["900"]}
+          backgroundColor={theme.colors.brand["900"]}
         >
           <Send socket={socket} message={message} setMessage={setMessage} />
         </Box>

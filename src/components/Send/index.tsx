@@ -1,6 +1,7 @@
 import { Button, Flex, Input } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { IoSendSharp } from "react-icons/io5";
 
 export const Send = ({
   socket,
@@ -32,16 +33,16 @@ export const Send = ({
       <Input
         value={message}
         onChange={(e) => setMessage(e.currentTarget.value)}
-        colorScheme="gray"
-        color="gray.200"
+        colorScheme="brand"
+        color="brand.200"
         borderRightRadius={0}
-        backgroundColor="gray.800"
+        backgroundColor="brand.800"
         variant="filled"
-        placeholder="Start typing your message here..."
+        placeholder="Start typing your message..."
         onKeyDown={handleKeyDown}
         autoFocus
         _hover={{
-          backgroundColor: "gray.700",
+          backgroundColor: "brand.700",
         }}
         outline="none"
         _focus={{
@@ -56,10 +57,10 @@ export const Send = ({
       <Button
         isDisabled={!sessionId || !message?.length}
         borderLeftRadius={0}
-        colorScheme="gray"
+        colorScheme="brand"
         onClick={send}
       >
-        Send
+        <IoSendSharp />
       </Button>
     </>
   );

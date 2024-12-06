@@ -16,18 +16,18 @@ export const Sessions = ({ socket }: any) => {
           _hover={{ cursor: "pointer" }}
           backgroundColor={
             session === routeSessionId
-              ? theme.colors.gray["100"]
-              : theme.colors.gray["500"]
+              ? theme.colors.brand["100"]
+              : theme.colors.brand["500"]
           }
           display="flex"
           alignItems="center"
           justifyContent="center"
           color={
             session === routeSessionId
-              ? theme.colors.gray["900"]
-              : theme.colors.gray["300"]
+              ? theme.colors.brand["900"]
+              : theme.colors.brand["300"]
           }
-          colorScheme="gray"
+          colorScheme="brand"
           padding="10px"
           size="xs"
           onClick={() => {

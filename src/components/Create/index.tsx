@@ -1,5 +1,5 @@
 import { IconButton } from "@chakra-ui/react";
-import { BiPlus } from "react-icons/bi";
+import { FiPlus } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 
 export const Create = ({
@@ -17,8 +17,8 @@ export const Create = ({
   };
   return (
     <IconButton
-      icon={<BiPlus />}
-      colorScheme="gray"
+      icon={<FiPlus />}
+      colorScheme="brand"
       onClick={handleCreateSession}
       aria-label={""}
     />
