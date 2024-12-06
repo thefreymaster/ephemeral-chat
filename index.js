@@ -44,6 +44,11 @@ io.on("connection", (socket) => {
     });
   });
 
+  socket.on("leaveSession", (sessionId) => {
+    socket.leave(sessionId);
+    console.log("A user disconnected");
+  });
+
   socket.on("disconnect", () => {
     console.log("A user disconnected");
   });

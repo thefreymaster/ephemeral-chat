@@ -8,6 +8,7 @@ import { Sessions } from "./components/Sessions";
 import { useGlobalProvider } from "./providers/GlobalProvider";
 import { Messages } from "./components/Messages";
 import { Join } from "./components/Join";
+import { useDeviceSize } from "./hooks/useDeviceSize";
 
 const NAV_WIDTH = "90px";
 
@@ -17,10 +18,11 @@ const getSocketURL = () => {
   }
   return window.location.origin;
 };
-
 const socket = io(getSocketURL());
 
 function App() {
+  const { isMobile } = useDeviceSize();
+
   const { sessionId } = useParams();
   const { sessions, setSessions } = useGlobalProvider();
 
@@ -33,40 +35,41 @@ function App() {
 
   useEffect(() => {
     // Register the listener only once
-    socket.on(
-      `sendBroadcast`,
-      ({
-        message,
-        messageAuthor,
-      }: {
-        message: string;
-        messageAuthor: string;
-      }) => {
-        setMessages((prevMessages) => [
-          ...prevMessages,
-          { message, messageAuthor },
-        ]);
-      }
-    );
+    const handleBroadcast = ({
+      message,
+      messageAuthor,
+    }: {
+      message: string;
+      messageAuthor: string;
+    }) => {
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { message, messageAuthor },
+      ]);
+    };
+
+    socket.on(`sendBroadcast`, handleBroadcast);
+
+    return () => {
+      socket.off(`sendBroadcast`, handleBroadcast);
+    };
   }, [sessionId]);
 
   useEffect(() => {
     if (sessionId) {
       socket.emit("joinSession", sessionId);
       setSessions([sessionId]);
+      document.title = `Ephemeral Chat | ${sessionId}`;
+      setMessages([]);
       socket.on("connect", () => {
         console.log("Connected to server with ID:", socket.id);
         setUser(socket.id ?? "");
       });
     }
-  }, []);
 
-  useEffect(() => {
-    if (sessionId) {
-      document.title = `Ephemeral Chat | ${sessionId}`;
-      setMessages([]);
-      socket.emit("joinSession", sessionId);
-    }
+    return () => {
+      socket.emit("leaveSession", sessionId); // Optional cleanup if supported by your server
+    };
   }, [sessionId]);
 
   return (
@@ -90,7 +93,12 @@ function App() {
         <Join sessions={sessions} setSessions={setSessions} />
         <Create setSessions={setSessions} sessions={sessions} />
       </Box>
-      <Box minW={`calc(100vw - ${NAV_WIDTH})`} height="100%">
+      <Box
+        minW={
+          isMobile ? `calc(100vw - ${NAV_WIDTH})` : `calc(50vw - ${NAV_WIDTH})`
+        }
+        height="100%"
+      >
         <Messages user={user} messages={messages} />
         <Box
           padding="2"
