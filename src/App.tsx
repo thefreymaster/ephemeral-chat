@@ -3,7 +3,7 @@ import { io } from "socket.io-client";
 import { Send } from "./components/Send";
 import { useParams } from "react-router-dom";
 import { Create } from "./components/Create";
-import { Box, useTheme } from "@chakra-ui/react";
+import { Box, useTheme, useToast } from "@chakra-ui/react";
 import { Sessions } from "./components/Sessions";
 import { useGlobalProvider } from "./providers/GlobalProvider";
 import { Messages } from "./components/Messages";
@@ -22,6 +22,7 @@ const socket = io(getSocketURL());
 
 function App() {
   const { isMobile } = useDeviceSize();
+  const toast = useToast();
 
   const { sessionId } = useParams();
   const { sessions, setSessions } = useGlobalProvider();
@@ -64,6 +65,13 @@ function App() {
       socket.on("sessionJoinReceived", ({ id }) => {
         console.log("Connected to server with ID:", id);
         setUser(id);
+        toast({
+          title: `User joined ${sessionId}`,
+          description: `${id} has joined room.`,
+          status: "info",
+          duration: 9000,
+          isClosable: true,
+        });
       });
     }
 
