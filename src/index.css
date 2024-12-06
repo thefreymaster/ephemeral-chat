@@ -1,0 +1,11 @@
+input:focus {
+  outline: 2px solid #00bcd4; /* Example custom color */
+  border-radius: 4px;        /* Optional: Add a border radius */
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
