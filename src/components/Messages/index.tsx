@@ -12,7 +12,7 @@ export const Messages = ({
   const { isMobile } = useDeviceSize();
 
   return (
-    <Box display="flex" flexDir="column">
+    <Box display="flex" flexDir="column" width="100%">
       {messages.map((m, i) => (
         <Box display="flex" flex="1" flexGrow="grow">
           {m.messageAuthor !== user && (
@@ -24,7 +24,7 @@ export const Messages = ({
             flexDir="column"
             flexWrap="wrap"
             margin="5px 5px 0px 5px"
-            width={isMobile ? "100%" : "50%"}
+            width={isMobile ? "75%" : "50%"}
             padding="2"
             backgroundColor={
               m.messageAuthor === user

@@ -7,7 +7,7 @@ export const Join = () => {
 
   const [sessionId, setValue] = useState("");
   const handleInputChange = (e: any) => {
-    setValue(e.currentTarget?.value);
+    setValue(e.currentTarget?.value?.toLowerCase());
   };
 
   useEffect(() => {

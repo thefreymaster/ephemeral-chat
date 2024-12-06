@@ -66,11 +66,12 @@ function App() {
         console.log("Connected to server with ID:", id);
         setUser(id);
         toast({
-          title: `User joined ${sessionId}`,
-          description: `${id} has joined room.`,
+          description: `${id} has joined.`,
           status: "info",
           duration: 9000,
           isClosable: true,
+          variant: "subtle",
+          position: "top-right",
         });
       });
     }
@@ -83,14 +84,14 @@ function App() {
   return (
     <Box
       width="100vw"
-      height="100vh"
+      height={isMobile ? "calc(100vh - 85px)" : "100vh"}
       display="flex"
       backgroundColor={theme.colors.brand["900"]}
     >
       <Box
         minW={NAV_WIDTH}
         maxW={NAV_WIDTH}
-        height="100%"
+        maxHeight="100%"
         display="flex"
         flexDir="column"
         padding="2"
@@ -106,6 +107,9 @@ function App() {
           isMobile ? `calc(100vw - ${NAV_WIDTH})` : `calc(50vw - ${NAV_WIDTH})`
         }
         height="100%"
+        display="flex"
+        alignItems="flex-end"
+        paddingBottom="55px"
       >
         <Messages user={user} messages={messages} />
         <Box
