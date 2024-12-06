@@ -59,7 +59,7 @@ function App() {
   useEffect(() => {
     if (sessionId) {
       socket.emit("joinSession", sessionId);
-      setSessions([sessionId]);
+      setSessions([...sessions, sessionId]);
       document.title = `Ephemeral Chat | ${sessionId}`;
       setMessages([]);
       socket.on("sessionJoinReceived", ({ id }) => {
@@ -98,8 +98,8 @@ function App() {
       >
         <Sessions socket={socket} />
         <Box flex={1} display="flex" />
-        <Join sessions={sessions} setSessions={setSessions} />
-        <Create setSessions={setSessions} sessions={sessions} />
+        <Join />
+        <Create />
       </Box>
       <Box
         minW={

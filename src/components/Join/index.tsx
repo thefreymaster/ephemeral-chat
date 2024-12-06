@@ -2,13 +2,7 @@ import { Input, FormControl } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export const Join = ({
-  setSessions,
-  sessions,
-}: {
-  setSessions(v: Array<string>): void;
-  sessions: Array<string>;
-}) => {
+export const Join = () => {
   const navigate = useNavigate();
 
   const [sessionId, setValue] = useState("");
@@ -18,7 +12,6 @@ export const Join = ({
 
   useEffect(() => {
     if (sessionId.length === 4) {
-      setSessions([...sessions, sessionId]);
       navigate(`/${sessionId}`);
       setValue("");
     }
