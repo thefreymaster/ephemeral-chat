@@ -69,11 +69,15 @@ export const Messages = ({
                 flexWrap="wrap"
                 fontWeight="medium"
               >
-                {Array.from(m.message).map((char, index) => (
-                  <ScaleFade in delay={index / 100}>
-                    {char === " " ? "\u00A0" : char}
-                  </ScaleFade>
-                ))}
+                {i === 0 ? (
+                  Array.from(m.message).map((char, index) => (
+                    <ScaleFade in delay={index / 100}>
+                      {char === " " ? "\u00A0" : char}
+                    </ScaleFade>
+                  ))
+                ) : (
+                  <>{m.message}</>
+                )}
               </Text>
             </Box>
           </Box>
