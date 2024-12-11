@@ -9,7 +9,7 @@ export const Sessions = () => {
   const theme = useTheme();
 
   return (
-    <Box display="flex" flexDirection="column" gap="2">
+    <Box display="flex" flexDirection="column" gap="2" zIndex="100">
       {sessions.map((session: string) => (
         <Badge
           borderRadius="100px"
@@ -18,7 +18,7 @@ export const Sessions = () => {
           backgroundColor={
             session === routeSessionId
               ? theme.colors.brand["100"]
-              : theme.colors.brand["700"]
+              : theme.colors.brand["7'00"]
           }
           display="flex"
           alignItems="center"

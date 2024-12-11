@@ -4,3 +4,7 @@ textarea:focus,
 button:focus {
   outline: none;
 }
+
+html {
+  background-color: #00000000 !important;
+}

@@ -28,17 +28,17 @@ export const Messages = ({
               flexDir="column"
               flexWrap="wrap"
               margin="0px 10px 10px 10px"
-              padding="2px 20px"
+              padding="8px 20px"
               width={isMobile ? "75%" : "50%"}
               backgroundColor={
                 m.messageAuthor === user
-                  ? theme.colors.brand["100"]
-                  : theme.colors.brand["800"]
+                  ? theme.colors.brand["300"]
+                  : theme.colors.brand["700"]
               }
               borderRadius={
                 m.messageAuthor === user
-                  ? "25px 0px 25px 25px"
-                  : "25px 25px 25px 0px"
+                  ? "1px 25px 25px 25px"
+                  : "25px 1px 25px 25px"
               }
               style={{
                 display: "inline-block", // Treats each character as a block so it wraps
@@ -51,11 +51,13 @@ export const Messages = ({
                     ? theme.colors.brand["800"]
                     : theme.colors.brand["100"]
                 }
-                fontSize="xs"
+                fontSize="10px"
+                lineHeight="12px"
               >
                 {m.messageAuthor === user ? "You" : m.messageAuthor}
               </Text>
               <Text
+                lineHeight="18px"
                 color={
                   m.messageAuthor === user
                     ? theme.colors.brand["800"]
