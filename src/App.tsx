@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import { Send } from "./components/Send";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Create } from "./components/Create";
 import { Box, Avatar, AvatarGroup } from "@chakra-ui/react";
 import { Sessions } from "./components/Sessions";
@@ -24,6 +24,7 @@ const socket = io(getSocketURL());
 
 function App() {
   const { isMobile } = useDeviceSize();
+  const navigate = useNavigate();
   // const toast = useToast();
 
   const { sessionId } = useParams();
@@ -50,7 +51,6 @@ function App() {
           ...prevMessages,
           [sessionId]: oldMessages,
         };
-        debugger;
         return res;
       });
     };
