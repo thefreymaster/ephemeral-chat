@@ -2,14 +2,16 @@
 
 import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
+import { Box, Avatar, AvatarGroup, Divider } from "@chakra-ui/react";
+
 import { Send } from "./components/Send";
 import { useNavigate, useParams } from "react-router-dom";
 import { Create } from "./components/Create";
-import { Box, Avatar, AvatarGroup } from "@chakra-ui/react";
 import { Sessions } from "./components/Sessions";
 import { useGlobalProvider } from "./providers/GlobalProvider";
 import { Messages } from "./components/Messages";
 import { Join } from "./components/Join";
+import { Invite } from "./components/Invite";
 import { useDeviceSize } from "./hooks/useDeviceSize";
 import { getSessionId } from "./utils/getSessionId";
 import { Background } from "./components/Background";
@@ -109,6 +111,8 @@ function App() {
           padding="2"
           gap="2"
         >
+          <Invite />
+          <Divider borderColor="#575757" />
           <Sessions />
           <Box flex={1} display="flex" />
           <Join />
