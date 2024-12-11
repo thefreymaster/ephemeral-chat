@@ -1,0 +1,1 @@
+input:focus,select:focus,textarea:focus,button:focus{outline:none}html{background-color:#0000!important}.send{animation:grow-border 1s forwards}@keyframes grow-border{0%{border-width:0px}to{border-width:2px}}
