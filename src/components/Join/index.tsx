@@ -30,7 +30,6 @@ export const Join = () => {
         color="brand.200"
         borderRadius="100px"
         backgroundColor="brand.800"
-        autoFocus
         _hover={{
           backgroundColor: "brand.700",
         }}

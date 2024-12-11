@@ -39,7 +39,7 @@ export const Send = ({
         borderRightRadius={0}
         backgroundColor="brand.800"
         variant="filled"
-        placeholder="Start typing your message..."
+        placeholder="Start typing..."
         onKeyDown={handleKeyDown}
         autoFocus
         focusBorderColor="transparent"
@@ -69,6 +69,7 @@ export const Send = ({
         border="2px solid"
         borderColor="brand.300"
         borderWidth={0}
+        zIndex="100"
       >
         <IoSendSharp />
       </Button>
