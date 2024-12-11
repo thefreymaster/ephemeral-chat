@@ -11,6 +11,7 @@ export const Create = () => {
   return (
     <IconButton
       icon={<FiPlus />}
+      borderRadius="100px"
       colorScheme="brand"
       onClick={handleCreateSession}
       aria-label={""}

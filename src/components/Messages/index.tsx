@@ -1,5 +1,7 @@
+// @ts-nocheck
 import { Box, ScaleFade, Text, useTheme } from "@chakra-ui/react";
 import { useDeviceSize } from "../../hooks/useDeviceSize";
+import { useParams } from "react-router-dom";
 
 export const Messages = ({
   messages,
@@ -10,10 +12,11 @@ export const Messages = ({
 }) => {
   const theme = useTheme();
   const { isMobile } = useDeviceSize();
+  const { sessionId } = useParams();
 
   return (
     <Box display="flex" flexDir="column" width="100%">
-      {messages.map((m, i) => (
+      {messages?.[sessionId ?? ""]?.map((m, i) => (
         <Box display="flex" flex="1" flexGrow="grow">
           {m.messageAuthor !== user && (
             <Box display="flex" flex="1" flexGrow="grow" />
@@ -23,31 +26,45 @@ export const Messages = ({
             display="flex"
             flexDir="column"
             flexWrap="wrap"
-            margin="5px 5px 0px 5px"
+            margin="0px 20px 20px 20px"
+            padding="5px 20px"
             width={isMobile ? "75%" : "50%"}
-            padding="2"
             backgroundColor={
               m.messageAuthor === user
-                ? theme.colors.brand["700"]
+                ? theme.colors.brand["100"]
                 : theme.colors.brand["800"]
             }
             borderRadius={
-              m.messageAuthor === user ? "5px 0px 5px 5px" : "5px 5px 5px 0px"
+              m.messageAuthor === user
+                ? "100px 0px 100px 100px"
+                : "100px 100px 100px 0px"
             }
             style={{
               display: "inline-block", // Treats each character as a block so it wraps
               whiteSpace: "pre", // Preserves spaces as they are
             }}
           >
-            <Text color={theme.colors.brand["500"]} fontSize="xs">
+            <Text
+              color={
+                m.messageAuthor === user
+                  ? theme.colors.brand["800"]
+                  : theme.colors.brand["100"]
+              }
+              fontSize="xs"
+            >
               {m.messageAuthor === user ? "You" : m.messageAuthor}
             </Text>
             <Text
-              color={theme.colors.brand["200"]}
+              color={
+                m.messageAuthor === user
+                  ? theme.colors.brand["800"]
+                  : theme.colors.brand["100"]
+              }
               fontSize="md"
               display="flex"
               flexDir="row"
               flexWrap="wrap"
+              fontWeight="medium"
             >
               {Array.from(m.message).map((char, index) => (
                 <ScaleFade in delay={index / 100}>

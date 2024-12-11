@@ -19,16 +19,16 @@ const theme = extendTheme({
   config: config(),
   colors: {
     brand: {
-      50: "#f7f9fb", // Soft Cloud
-      100: "#e3e8ef", // Light Mist
-      200: "#c9d2dd", // Silver Blue
-      300: "#a3b1c4", // Soft Slate
-      400: "#7f94af", // Gray Blue
-      500: "#5e7898", // Base Gray Blue
-      600: "#495d7a", // Steely Blue
-      700: "#36465d", // Charcoal Blue
-      800: "#252f3f", // Deep Slate
-      900: "#13181f", // Midnight Gray
+      50: "#e9ebed", // Dim Cloud
+      100: "#c4c9d0", // Faded Mist
+      200: "#9ca3b0", // Deep Silver Blue
+      300: "#6e798c", // Dark Slate
+      400: "#49506a", // Muted Gray Blue
+      500: "#313b4f", // Dark Base Gray Blue
+      600: "#232a3a", // Shadowy Blue
+      700: "#181f2a", // Charcoal
+      800: "#0e121a", // Deep Charcoal
+      900: "#05080c", // Near Black
     },
     accent: {
       50: "#fef7f0", // Whisper Peach

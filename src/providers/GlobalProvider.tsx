@@ -1,11 +1,4 @@
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import { io } from "socket.io-client";
+import React, { createContext, useContext, useState } from "react";
 
 // Define the type for the socket
 type SocketContextType = any;
@@ -18,31 +11,12 @@ interface SocketProviderProps {
 }
 
 export const GlobalProvider: React.FC<SocketProviderProps> = ({ children }) => {
-  const socketRef = useRef<any>(null);
   const [sessions, setSessions] = useState([]);
-
-  useEffect(() => {
-    // Initialize Socket.IO connection
-    socketRef.current = io("https://your-socketio-server", {
-      transports: ["websocket"],
-    });
-
-    socketRef.current.on("connect", () => {
-      console.log("Socket connected:", socketRef.current?.id);
-    });
-
-    socketRef.current.on("disconnect", () => {
-      console.log("Socket disconnected");
-    });
-
-    return () => {
-      socketRef.current?.disconnect(); // Cleanup on unmount
-    };
-  }, []);
+  const [messages, setMessages] = useState({});
 
   return (
     <SocketContext.Provider
-      value={{ ...socketRef.current, setSessions, sessions }}
+      value={{ setSessions, sessions, messages, setMessages }}
     >
       {children}
     </SocketContext.Provider>

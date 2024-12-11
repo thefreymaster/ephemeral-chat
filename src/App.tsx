@@ -1,9 +1,11 @@
+// @ts-nocheck
+
 import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import { Send } from "./components/Send";
 import { useParams } from "react-router-dom";
 import { Create } from "./components/Create";
-import { Box, useTheme } from "@chakra-ui/react";
+import { Box, Avatar, AvatarGroup } from "@chakra-ui/react";
 import { Sessions } from "./components/Sessions";
 import { useGlobalProvider } from "./providers/GlobalProvider";
 import { Messages } from "./components/Messages";
@@ -25,14 +27,11 @@ function App() {
   // const toast = useToast();
 
   const { sessionId } = useParams();
-  const { sessions, setSessions } = useGlobalProvider();
+  const { sessions, setSessions, messages, setMessages } = useGlobalProvider();
 
   const [message, setMessage] = useState("");
   const [user, setUser] = useState("");
-  const [messages, setMessages] = useState<
-    Array<{ message: string; messageAuthor: string }>
-  >([]);
-  const theme = useTheme();
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
     // Register the listener only once
@@ -43,10 +42,17 @@ function App() {
       message: string;
       messageAuthor: string;
     }) => {
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        { message, messageAuthor },
-      ]);
+      setMessages((prevMessages) => {
+        const oldMessages = Array.isArray(prevMessages?.[sessionId])
+          ? [{ message, messageAuthor }, ...prevMessages?.[sessionId]]
+          : [{ message, messageAuthor }];
+        const res = {
+          ...prevMessages,
+          [sessionId]: oldMessages,
+        };
+        debugger;
+        return res;
+      });
     };
 
     socket.on(`sendBroadcast`, handleBroadcast);
@@ -63,18 +69,13 @@ function App() {
         setSessions([...sessions, sessionId]);
       }
       document.title = `Ephemeral Chat | ${sessionId}`;
-      setMessages([]);
+      setUsers([]);
       socket.on("sessionJoinReceived", ({ id }) => {
         console.log("Connected to server with ID:", id);
         setUser(id);
-        // toast({
-        //   description: `${id} has joined.`,
-        //   status: "info",
-        //   duration: 9000,
-        //   isClosable: true,
-        //   variant: "subtle",
-        //   position: "top-right",
-        // });
+        if (users.indexOf(id) === -1) {
+          setUsers((prevUsers) => [...prevUsers, id]);
+        }
       });
     }
 
@@ -88,7 +89,8 @@ function App() {
       width="100vw"
       height={isMobile ? "calc(100vh - 85px)" : "100vh"}
       display="flex"
-      backgroundColor={theme.colors.brand["900"]}
+      // backgroundColor={theme.colors.brand["900"]}
+      background="linear-gradient(to top, black, #121212);"
     >
       <Box
         minW={NAV_WIDTH}
@@ -105,27 +107,35 @@ function App() {
         <Create />
       </Box>
       <Box
-        minW={
-          isMobile ? `calc(100vw - ${NAV_WIDTH})` : `calc(50vw - ${NAV_WIDTH})`
-        }
-        height="100%"
+        width={`calc(100vw - ${NAV_WIDTH})`}
         display="flex"
-        alignItems="flex-end"
-        paddingBottom="55px"
+        justifyContent="center"
       >
-        {/* <Box minW="100%" color="white">
+        <Box
+          minW={isMobile ? `100%` : `calc(50vw - ${NAV_WIDTH})`}
+          height="100%"
+          display="flex"
+          alignItems="flex-end"
+          paddingBottom="55px"
+        >
+          {/* <Box minW="100%" color="white">
           {user}
         </Box> */}
-        <Messages user={user} messages={messages} />
-        <Box
-          padding="2"
-          width={`calc(100vw - ${NAV_WIDTH})`}
-          display="flex"
-          position="fixed"
-          bottom="0"
-          backgroundColor={theme.colors.brand["900"]}
-        >
-          <Send socket={socket} message={message} setMessage={setMessage} />
+          <Messages user={user} messages={messages} />
+          <Box
+            padding="2"
+            width={isMobile ? "auto" : `50%`}
+            display="flex"
+            position="fixed"
+            bottom="0"
+          >
+            <AvatarGroup size="sm" max={2} marginRight="4">
+              {users.map((user) => (
+                <Avatar colorScheme="gray" name={user} borderWidth="0px" />
+              ))}
+            </AvatarGroup>
+            <Send socket={socket} message={message} setMessage={setMessage} />
+          </Box>
         </Box>
       </Box>
     </Box>

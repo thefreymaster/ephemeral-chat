@@ -1,0 +1,12 @@
+.send {
+  animation: grow-border 1s forwards;
+}
+
+@keyframes grow-border {
+  from {
+    border-width: 0px;
+  }
+  to {
+    border-width: 2px;
+  }
+}

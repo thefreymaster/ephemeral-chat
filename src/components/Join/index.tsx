@@ -23,15 +23,23 @@ export const Join = () => {
         maxW="120px"
         value={sessionId}
         onChange={(e) => handleInputChange(e)}
-        placeholder="Join..."
-        color="white"
+        placeholder="Join"
         variant="filled"
         outline="none"
+        colorScheme="brand"
+        color="brand.200"
+        borderRadius="100px"
+        backgroundColor="brand.800"
+        autoFocus
+        _hover={{
+          backgroundColor: "brand.700",
+        }}
         _focus={{
           outline: "none",
           borderColor: "inherit",
           "-webkit-box-shadow": "none",
           "box-shadow": "none",
+          borderRadius: "100px",
         }}
       />
     </FormControl>

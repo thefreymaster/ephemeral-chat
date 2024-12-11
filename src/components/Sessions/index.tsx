@@ -12,12 +12,13 @@ export const Sessions = () => {
     <Box display="flex" flexDirection="column" gap="2">
       {sessions.map((session: string) => (
         <Badge
+          borderRadius="100px"
           key={session}
           _hover={{ cursor: "pointer" }}
           backgroundColor={
             session === routeSessionId
-              ? theme.colors.brand["200"]
-              : theme.colors.brand["800"]
+              ? theme.colors.brand["100"]
+              : theme.colors.brand["700"]
           }
           display="flex"
           alignItems="center"
@@ -31,7 +32,7 @@ export const Sessions = () => {
           padding="10px"
           size="xs"
           onClick={() => {
-            navigate(`/${session}`)
+            navigate(`/${session}`);
           }}
         >
           {session}
