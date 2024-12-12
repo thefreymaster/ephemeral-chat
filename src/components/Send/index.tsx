@@ -58,18 +58,21 @@ export const Send = ({
           color: "white",
           backgroundColor: "brand.600",
         }}
+        opacity="1"
+        zIndex={100}
         isDisabled={!sessionId}
       />
       <Button
         isDisabled={!sessionId || !message?.length}
         borderLeftRadius={0}
+        opacity={1}
+        zIndex={100}
         colorScheme={!sessionId || !message?.length ? "brand" : "orange"}
         onClick={send}
         borderRadius="0px 25px 25px 0px"
         border="2px solid"
         borderColor="brand.300"
         borderWidth={0}
-        zIndex="100"
       >
         <IoSendSharp />
       </Button>

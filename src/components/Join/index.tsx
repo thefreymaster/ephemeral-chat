@@ -30,6 +30,7 @@ export const Join = () => {
         color="brand.200"
         borderRadius="100px"
         backgroundColor="brand.800"
+        textAlign="center"
         _hover={{
           backgroundColor: "brand.700",
         }}
