@@ -1,5 +1,6 @@
 import { Box, ScaleFade } from "@chakra-ui/react";
 import { useMemo } from "react";
+import { useDeviceSize } from "../../hooks/useDeviceSize";
 
 export const Background = () => {
   const scale = 50;
@@ -7,13 +8,14 @@ export const Background = () => {
   const rowsWidth = window.innerHeight / scale;
   const rows = Array.from({ length: rowsHeight }, (_, i) => i + 5);
   const columns = Array.from({ length: rowsWidth }, (_, i) => i + 5);
+  const { isMobile } = useDeviceSize();
 
   const memorizedBackground = useMemo(
     () => (
       <Box
         width="100vw"
-        height="100vh"
-        position="absolute"
+        height={isMobile ? "calc(100vh - 85px)" : "100vh"}
+        position="fixed"
         left="0"
         top="0"
         zIndex="-1"
