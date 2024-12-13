@@ -19,6 +19,7 @@ export const Invite = () => {
         onCopy();
       }}
       borderRadius={100}
+      colorScheme="orange"
       fontSize="sm"
     >
       {hasCopied ? "Copied!" : "Invite"}
